@@ -1,3 +1,4 @@
+import markdown
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Blog
@@ -11,7 +12,8 @@ def home(request):
 
 def blog(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
-    return render(request, "blog.html", {"blog": blog})
+    content = markdown.markdown(blog.content)
+    return render(request, "blog.html", {"content": content, "title": blog.title})
 
 
 def create(request):
@@ -29,5 +31,5 @@ def create(request):
 
 
 def preview(request):
-    content = request.POST["content"]
+    content = markdown.markdown(request.POST["content"])
     return HttpResponse(content)

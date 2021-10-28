@@ -10,6 +10,7 @@ class BlogForm(forms.ModelForm):
         widgets = {
             "content": forms.Textarea(
                 attrs={
+                    "class": "h-400",
                     "hx-post": "/preview",
                     "hx-trigger": "keyup changed delay:500ms",
                     "hx-target": "#preview",
