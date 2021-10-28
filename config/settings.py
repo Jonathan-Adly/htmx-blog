@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "accounts",
     "allauth.socialaccount",
+    "crispy_forms",
     "blog",
 ]
 
@@ -160,3 +161,6 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 # email
 # email will go to console for now, need to change in production
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"

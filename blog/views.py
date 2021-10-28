@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Blog
+from .forms import BlogForm
 
 
 def home(request):
@@ -10,3 +12,22 @@ def home(request):
 def blog(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     return render(request, "blog.html", {"blog": blog})
+
+
+def create(request):
+    form = BlogForm()
+    if request.method == "POST":
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            blog = form.save()
+            return redirect("blog", slug=blog.slug)
+        else:
+            return render(
+                request, "create_blog.html", {"form": form, "errors": form.errors}
+            )
+    return render(request, "create_blog.html", {"form": form, "errors": None})
+
+
+def preview(request):
+    content = request.POST["content"]
+    return HttpResponse(content)
